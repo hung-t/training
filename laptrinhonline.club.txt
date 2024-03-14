@@ -1,0 +1,2845 @@
+/*
+ *
+ *
+ */
+//For C/C++
+#include <bits/stdc++.h>
+using namespace std;
+
+
+
+
+
+
+
+
+
+
+
+
+//0.Banh chung-----------------------------------------------------------------------------------
+//Y tuong - Ghep cap voi nhau
+/*
+//Ham tim min
+int min(int a, int b)
+{
+	if(a >= b)return b;
+	return a;
+}
+
+main()
+{
+	//Khai bao va nhap va so(sơ) xu ly
+	int n, i, j, so_banh_can = 0;
+	int tim_cap_chua;
+	scanf("%d", &n);
+	int arr[n], nhom[5];
+	for(i = 0; i < n; i++)
+	{
+		scanf("%d", &arr[i]);
+	}
+	//Xu ly
+	for(i = 1; i < 5; i++)
+	{
+		nhom[i] = 0;
+	}
+	for(i = 0; i < n; i++)
+	{
+		nhom[arr[i]]++;
+	}
+	//Nhom 4 nguoi
+	so_banh_can += nhom[4];
+	nhom[4] = 0;
+	//Ghep 3 - 1
+	if(nhom[3] > 0 && nhom[1] > 0)
+	{
+		int m = min(nhom[3], nhom[1]);
+		so_banh_can += m;
+		nhom[3] -= m;
+		nhom[1] -= m;
+	}
+	so_banh_can += nhom[3];
+	nhom[3] = 0;
+	//Ghep 2 - 2
+	if(nhom[2] != 0 && nhom[2] % 2 == 0)
+	{
+		so_banh_can += nhom[2] / 2;
+		nhom[2] = 0;
+	}
+	if(nhom[2] % 2 == 1)
+	{
+		so_banh_can += (nhom[2] - 1) / 2;
+		nhom[2] = 1;
+	}
+	//Ghep 2 - 1
+	if(nhom[2] == 1 && nhom[1] >= 2)
+	{
+		so_banh_can++;
+		nhom[1] -= 2;
+		nhom[2] = 0;
+	}
+	if(nhom[2] == 1 && nhom[1] == 1)
+	{
+		so_banh_can++;
+		nhom[2] = 0;
+		nhom[1] = 0;
+	}
+	if(nhom[2] == 1)
+	{
+		so_banh_can++;
+		nhom[2] = 0;
+	}
+	// Ghep 1 - 1
+	so_banh_can += ceil((long double)nhom[1] / 4.0);
+	nhom[1] = 0;
+	printf("%d", so_banh_can);
+}
+*/
+
+
+
+
+
+
+//Bo Bestie--------------------------------------------------------------------------------
+/*
+main()
+{
+	int arr[3], i, j, doicho, n1, n2;
+	for(i = 0; i < 3; i++)
+	{
+		scanf("%d", &arr[i]);
+	}
+	//Sap xep
+	for(i = 0; i < 3; i++)
+	{
+		for(j = 0; j < 2; j++)
+		{
+			if(arr[j] > arr[j + 1]){
+				doicho = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = doicho;
+			}
+		}
+		n1 = arr[1] + 1; n2 = arr[1] - 1;
+	}
+	//So sanh khoang cach
+	if(abs(arr[0] - n1) + abs(arr[2] - n2) > abs(arr[0] - n2) + abs(arr[2] - n1))
+	{
+		printf("%d", abs(arr[0] - n2) + abs(arr[2] - n1));
+	}
+	else
+	{
+		printf("%d", abs(arr[0] - n1) + abs(arr[2] - n2));
+	}
+}
+*/
+
+
+
+
+
+
+
+
+
+//Rut gon phan so - Rút gọn phân số (Gan giong continuedFraction trong Codelearn.io)-----------------------------------------------------
+/*
+//Ham doi cho
+void swap(int &a, int &b)
+{
+	int doicho = a;
+	a = b;
+	b = doicho;
+}
+
+
+//Ham tim gia tri nho nhat
+int min(int a, int b)
+{
+	if(a > b)return b;
+	return a;
+}
+
+
+//Ham tim uoc chung nho nhat
+int gcd(int a, int b)
+{
+	if(a == b)return a;
+	for(int i = min(a, b); i > 1; i--)
+	{
+		if(a % i == 0 && b % i == 0)return i;
+	}
+	return 1;
+}
+
+
+main()
+{
+	int n, i;
+	scanf("%d", &n);
+	int arr[n];
+	for(i = 0; i < n; i++)
+	{
+		scanf("%d", &arr[i]);
+	}
+	int ts = arr[n - 1], ms = 1;
+	for(i = n - 2; i > -1; i--)
+	{
+		swap(ts, ms);
+		ts = arr[i] * ms + ts;
+	}
+	printf("%d/%d", ts / gcd(ts, ms), ms / gcd(ts, ms));
+}
+*/
+
+
+
+//Day con lien tuc co tong lon nhat - Dãy con liên tục có tổng lớn nhất-----------------------------------------------------------------
+//Gan giong maxSubarray trong Codelearn.io
+/*
+main()
+{
+	//Nhap va xu ly
+	long long n, sum, i, j = 0, k, q = 0, max = 0;
+	std::cin >> n;
+	long long arr[n], vi_tri_duong[n];
+	std::vector<long long> tong;
+	for(i = 0; i < n; i++)
+	{
+		scanf("%lld", &arr[i]);
+		if(arr[i] > 0)
+		{
+			vi_tri_duong[j] = i;
+			if(max < arr[i])max = arr[i];
+			j++;
+		}
+	} 
+	tong.push_back(max);
+	if(j == 0)
+	{
+		max = arr[0];
+		for(i = 0; i < n; i++)
+		{
+			if(max < arr[i])max = arr[i];
+		}
+		printf("%lld", max);
+		return 0;
+	}
+	for(k = 0; k < j; k++)
+	{
+		sum = 0; max = 0;
+		for(i = vi_tri_duong[k]; i < n; i++)
+		{
+			sum += arr[i];
+			if(arr[i] > 0)
+			{
+				if(sum > max)max = sum;
+			}
+			if(sum < 0)break;
+		}
+		tong.push_back(max);
+		if(sum < 0)continue;
+	}
+	//Tim gia tri doan max
+	max = tong[0];
+	for(i = 0; i < tong.size(); i++)
+	{
+		if(max < tong[i])max = tong[i];
+	}
+	printf("%lld", max);
+}
+*/
+
+
+
+
+
+
+
+
+
+//Dien tich duoi - Diện tích dưới---------------------------------------------------------------------------
+/*
+main()
+{
+	double matrix[12][12], sum = 0, dem = 0;
+	char c;
+	int i = 0, j = 0, k = 5;
+	std::cin >> c;
+	for(i = 0; i < 12; i++)
+	{
+		for(j = 0; j < 12; j++)
+		{
+			std::cin >> matrix[i][j];
+		}
+	}
+	for(i = 7; i < 12; i++, k--)
+	{
+		for(j = k; j < 12 - k; j++)
+		{
+			sum += matrix[i][j];
+			dem++;
+		}
+	}
+	if(c == 'S')printf("%.1lf", sum);
+	if(c == 'M')printf("%.1lf", sum / dem);
+}
+*/
+
+
+
+
+
+
+
+
+
+
+//Lai la Quy luat cua day so - Lại là Quy luật của dãy số---------------------------------------------------------------------
+//Y tuong: Giai chuoi so
+/*
+long long solve(long long position)
+{
+	return 1 + ((position - 1) * position) / 2; 
+}
+
+main()
+{
+	int i, n;
+	scanf("%d", &n);
+	long long arr[n];
+	for(i = 0; i < n; i++)
+	{
+		scanf("%lld", &arr[i]);
+	}
+	for(i = 0; i < n; i++)
+	{
+		printf("%lld\n", solve(arr[i]));
+	}
+}
+*/
+
+
+
+
+//Phan tu con thieu - Phần tử còn thiếu-----------------------------------------------------------------------------------
+/*
+main()
+{
+	int so, dem[lol], max = 0;
+	for(int i = 1; i < lol; i++)
+	{
+		dem[i] = 0;
+	}
+	while(cin >> so)
+	{
+		if(max < so)max = so;
+		dem[so]++;
+	}
+	for(int i = 1; i <= max; i++)
+	{
+		if(dem[i] == 0)
+		{
+			cout << i;
+			return 0;
+		}
+	}
+	cout << max + 1;
+}
+*/
+
+
+
+//Tich hai da thuc - Tích hai đa thức-------------------------------------------------------------------------------
+/*
+main()
+{
+	//Khai bao va nhap
+	int m, n, i, j;
+	scanf("%d", &n);
+	double arr1[n + 1];
+	for(i = 0; i < n + 1; i++)
+	{
+		scanf("%lf", &arr1[i]);
+	}
+	scanf("%d", &m);
+	double arr2[m + 1], bac[m + n + 2] = {0};
+	for(i = 0; i < m + 1; i++)
+	{
+		scanf("%lf", &arr2[i]);
+	}
+	//Xu ly
+	int bac_may;
+	for(i = 0; i < n + 1; i++){
+		for(j = 0; j < m + 1; j++)
+		{
+			bac[i + j] += arr1[i] * arr2[j];
+		}
+	}
+	for(i = m + n + 1; i > 0; i--)
+	{
+		if(bac[i] == 0)bac_may = i - 1;
+	}
+	printf("%d\n", bac_may);
+	for(i = 0; i < bac_may + 1; i++)
+	{
+		printf("%.2lf ", bac[i]);
+	}
+	
+}
+*/
+
+
+
+//Lam Them - Làm Thêm----------------------------------------------------------------------
+//Y tuong: Nhu giai thua cua n
+/*
+main()
+{
+	long long n, tich = 1;
+	scanf("%lld", &n);
+	if(n == 0)
+	{
+		printf("0");
+		return 0;
+	}
+	while(n != 0)
+	{
+		tich *= n;
+		n--;
+	}
+	printf("%lld", tich);
+}
+*/
+
+
+//t2r3. Ba chu so tan cung cua luy thua - t2r3. Ba chữ số tận cùng của lũy thừa-----------------------------------------------------------------
+/*
+//Áp dụng nthuật toán nhân lũy thừa bằng bình phương
+long long luy_thua(__int128_t a, __int128_t b, __int128_t d)
+{
+	__int128_t p = 1, n = 0;
+	while(b >= 1 << n)
+	{
+		n++;
+	}
+    __int128_t i = n;
+	//Chuyển b thành nhị phân
+    bool binary[n] = {0};
+    while(b != 0)
+    {
+        if(b >= 1 << i)
+        {
+            binary[n - i - 1] = 1;
+            b -= 1 << i;
+        }
+        i--;
+    }
+	//Tinh module luy thua
+	for(i = 0; i < n; i++)
+    {
+        if(binary[i] == 1)
+        {
+            p = ((p * p) % d * a) % d;
+            continue;
+        }
+        p = ((p * p) % d) % d;
+    }
+	return p;
+}
+
+
+
+main()
+{
+	long long a, b, n;
+	scanf("%lld %lld", &a, &b);
+   //Có quy tắc đặc biệt
+    if(b >= 3)
+    {
+        b = b % 100 + 100;
+    }
+	n = luy_thua(a, b, 1000);
+	if(n >= 0 && n <= 9)
+	{
+		printf("00%lld", n);
+		return 0;
+	}
+	if(n >= 10 && n <= 99)
+	{
+		printf("0%lld", n);
+		return 0;
+	}
+	printf("%lld", n);
+}
+*/
+
+
+
+
+
+
+
+
+//Lai la ba chu so tan cung cua luy thua - Lại là ba chữ số tận cùng của luỹ thừa----------------------------------------------------------------------
+//Nhận xét:(Kế thừa t2r3. Ba chữ số tận cùng của lũy thừa)
+/*
+long long luy_thua(__int128_t a, __int128_t b, __int128_t d)
+{
+	__int128_t p = 1, n = 0;
+	while(b >= 1 << n)
+	{
+		n++;
+	}
+    __int128_t i = n;
+	//Chuyển b thành nhị phân
+    bool binary[n] = {0};
+    while(b != 0)
+    {
+        if(b >= 1 << i)
+        {
+            binary[n - i - 1] = 1;
+            b -= 1 << i;
+        }
+        i--;
+    }
+	//Tinh module luy thua
+	for(i = 0; i < n; i++)
+    {
+        if(binary[i] == 1)
+        {
+            p = ((p * p) % d * a) % d;
+            continue;
+        }
+        p = ((p * p) % d) % d;
+    }
+	return p;
+}
+
+
+
+main()
+{
+	long long a = 0, b = 0, n, i, j = 1;
+	std::string xau_a ,xau_b;
+	std::cin >> xau_a >> xau_b;
+	//Phân tích sao cho tương đương kết quả
+	for(i = xau_a.size() - 1; i >= 0; i--)
+	{
+		if(j == 10000)break;
+		a += (xau_a[i] - 48) * j;
+		j *= 10;
+	}
+	j = 1;
+	for(i = xau_b.size() - 1; i >= 0; i--)
+	{
+		if(j == 10000)break;
+		b += (xau_b[i] - 48) * j;
+		j *= 10;
+	}
+    //Có quy tắc đặc biệt
+    if(b >= 3)
+    {
+        b = b % 100 + 100;
+    }
+	n = luy_thua(a, b, 1000);
+	if(n >= 0 && n <= 9)
+	{
+		printf("00%lld", n);
+		return 0;
+	}
+	if(n >= 10 && n <= 99)
+	{
+		printf("0%lld", n);
+		return 0;
+	}
+	printf("%lld", n);
+}
+*/
+
+
+
+
+
+
+
+//Rut gon xau - Rút gọn xâu-----------------------------------------------------------------------------------
+/*
+int main()
+{
+	int n, i, j = 0;
+	string xau, result_str;
+	char c;
+	cin >> n >> xau;
+	for(i = j; i < n; i = j)
+	{
+		result_str.push_back(xau[i]);
+		for(j = i + 1; j < n; j++)
+		{
+			if(xau[j] != xau[i])break;
+		}
+	}
+	cout << result_str;
+}
+*/
+
+
+//Nhung chu so den dui - Những chữ số đen đủi--------------------------------------------------------
+/*
+main()
+{
+	int n, k, so_ghet[11] = {0}, i;
+	scanf("%d %d", &n, &k);
+	for(i = 0; i < k; i++)
+	{
+		int so;
+		scanf("%d", &so);
+		so_ghet[so] = 1;
+	}
+	int cac_chu_so_sau_phan_tach[100];
+	for(i = n; ; i++)
+	{
+		int so = i, j = 0, is_true = 1, k = 0; 
+		//So thoa man thi dung
+		while(so != 0)
+		{
+			cac_chu_so_sau_phan_tach[j] = so % 10;
+			so = (so - cac_chu_so_sau_phan_tach[j]) / 10;
+			j++;
+		}
+		while(k < j)
+		{
+			if(so_ghet[cac_chu_so_sau_phan_tach[k]] == 1){
+				is_true = 0;break;
+			}
+			k++;
+		}
+		if(is_true == 1)
+		{
+			printf("%d", i);
+			return 0;
+		}
+	}
+}
+*/
+
+
+
+
+
+//Khoi luong hoa chat - Khối lượng hóa chất-------------------------------------------------------
+/*
+int weight(string chemical_name)
+{
+	int i, sum = 0;
+	for(i = 0; i < chemical_name.size(); )
+	{
+		if(chemical_name[i] == 'C')
+		{
+			if(chemical_name[i + 1] >= '0' && chemical_name[i + 1] <= '9')
+			{
+				sum += 12 * (chemical_name[i + 1] - 48);
+				i += 2;
+				if(chemical_name[i] == '\0')break;
+				continue;
+			}
+			else sum += 12;
+			i++;
+			if(chemical_name[i] == '\0')break;
+			continue;
+		}
+		if(chemical_name[i] == 'O')
+		{
+			if(chemical_name[i + 1] >= '0' && chemical_name[i + 1] <= '9')
+			{
+				sum += 16 * (chemical_name[i + 1] - 48);
+				i += 2;
+				if(chemical_name[i] == '\0')break;
+				continue;
+			}
+			else sum += 16;
+			i++;
+			if(chemical_name[i] == '\0')break;
+			continue;
+		}
+		if(chemical_name[i] == 'H')
+		{
+			if(chemical_name[i + 1] >= '0' && chemical_name[i + 1] <= '9')
+			{
+				sum += 1 * (chemical_name[i + 1] - 48);
+				i += 2;
+				if(chemical_name[i] == '\0')break;
+				continue;
+			}
+			sum += 1;
+			i++;
+			if(chemical_name[i] == '\0')break;
+			continue;
+		}
+		if(chemical_name[i] == '(')
+        {
+            int j = 0, dem = 0;
+            for(j = i + 1; j < chemical_name.size() ; j++)
+            {
+                if(dem == 0 && chemical_name[j] == ')')break;
+                if(chemical_name[j] == '(')dem++;
+                if(chemical_name[j] == ')')dem--;
+            }
+            if(chemical_name[j + 1] >= '0' && chemical_name[j + 1] <= '9')
+            {
+                sum +=(chemical_name[j + 1] - 48) 
+			    * weight(chemical_name.substr(i + 1, j - i - 1));
+                i = j + 2;
+            }
+            else
+            {
+                sum += weight(chemical_name.substr(i + 1, j - i - 1));
+                i = j + 1;
+            }
+			if(chemical_name[i] == '\0')break;
+			continue;
+        }
+        i++;
+	}
+	return sum;
+}
+
+
+
+
+
+main()
+{
+	int t;
+	std::cin >> t;
+	string s[t];
+	for(int i = 0; i < t; i++)
+	{
+		std::cin >> s[i];
+	}
+	for(int i = 0; i < t; i++)
+	{
+		std::cout << weight(s[i]) <<endl;
+	}
+} 
+*/
+
+
+
+
+//Tich lon nhat - Tích lớn nhất---------------------------------------------------------------------------------------
+/*
+long long res(long long n)
+{
+	if(n == 1)return 1;
+	if(n == 2)return 2;
+	//n % 3 == 0
+	if(n % 3 == 0)
+	{
+		return pow(3, n / 3);
+	}
+
+
+	//n % 3 == 1
+	if(n % 3 == 1)
+	{
+		return 2 * 2 * pow(3, (n - 4) / 3);
+	}
+
+	//n % 3 == 2
+	if(n % 3 == 2)
+	{
+		return 2 * pow(3, (n - 2) / 3);
+	}
+
+}
+
+
+
+
+int main()
+{
+	long long t, i;
+	scanf("%lld", &t);
+	long long arr[t];
+	for(i = 0; i < t; i++)
+	{
+		scanf("%lld", &arr[i]);
+	}
+	for(i = 0; i < t; i++)
+	{
+		printf("%lld\n", res(arr[i]));
+	}
+}
+*/
+
+
+
+
+
+
+//Tich uu tien - Tích ưu tiên-----------------------------------------------------------------------------
+/*Nhận xét: Rất may chưa có trường hợp tìm tích max,
+	tích min trong trường hợp tệ nhất*/
+/*
+long long a[100001], b[100001], u[100001], v[100001],
+		max_a[100001] = {0}, min_a[100001] = {0},
+		max_b[100001] = {0}, min_b[100001] = {0},
+		max, min;
+
+
+
+main()
+{
+	long long m, n, q, i, tich1, tich2;
+	scanf("%lld %lld %lld", &m, &n, &q);
+	scanf("%lld", &a[1]);
+	max_a[1] = a[1]; min_a[1] = a[1]; max = a[1]; min = a[1];
+	for(i = 2; i <= m; i++)
+	{
+		scanf("%lld", &a[i]);
+		if(a[i] > max)max = a[i];
+		if(a[i] < min)min = a[i];
+		max_a[i] = max;
+		min_a[i] = min;
+	}
+	scanf("%lld", &b[1]);
+	max_b[1] = b[1]; min_b[1] = b[1]; max = b[1]; min = b[1];
+	for(i = 2; i <= n; i++)
+	{
+		scanf("%lld", &b[i]);
+		if(b[i] > max)max = b[i];
+		if(b[i] < min)min = b[i];
+		max_b[i] = max;
+		min_b[i] = min;
+	}
+	for(i = 1; i <= q; i++)
+	{
+		scanf("%lld %lld", &u[i], &v[i]);
+	}
+	for(i = 1; i <= q; i++)
+	{
+		//Tìm max
+		tich1 = max_a[u[i]] * max_b[v[i]]; tich2 = min_a[u[i]] * min_b[v[i]];
+		if(tich1 >= tich2)printf("%lld", tich1);
+		else printf("%lld", tich2);
+		printf(" ");
+		//Tìm min
+		tich1 = max_a[u[i]] * min_b[v[i]]; tich2 = min_a[u[i]] * max_b[v[i]];
+		if(tich1 <= tich2)printf("%lld", tich1);
+		else printf("%lld", tich2);
+		printf("\n");
+	}
+}
+*/
+
+
+
+
+
+//Easy Problem------------------------------------------------------------------------------------
+/*
+void can_bac_hai(long long n)
+{
+	long long i, j, trong_can = 1, ngoai_can = 1, so, dem;
+	bool is_prime;
+	vector<long long> phan_tach;
+	while(n != 1)
+	{
+		is_prime = true;
+		for(i = 2; i <= sqrt(n); i++)
+		{
+			if(n % i == 0)
+			{
+				is_prime = false;
+				n = n / i;
+				phan_tach.push_back(i);
+				break;
+			}
+		}
+		if(is_prime == false)continue;
+		phan_tach.push_back(n);
+		break;
+	}
+	for(i = 0; i < phan_tach.size() - 1; )
+	{
+		dem = 0;
+		if(phan_tach[i] == phan_tach[i + 1])
+		{
+			so = phan_tach[i];
+			for(j = i; j < phan_tach.size() && so == phan_tach[j]; j++)
+			{
+				phan_tach[j] = 1;
+			}
+			if((j - i) % 2 == 1)
+			{
+				trong_can *= so;
+				j--;
+			}
+			ngoai_can *= pow(so, (j - i) / 2);
+			i = j;
+			continue;
+		}
+		i++;
+	}
+	for(i = 0; i < phan_tach.size(); i++)
+	{
+		trong_can *= phan_tach[i];
+	}
+	printf("%lld %lld", ngoai_can, trong_can);
+
+
+	printf("\n");
+}
+
+
+
+main()
+{
+	long long n;
+	scanf("%lld", &n);
+	long long arr[n];
+	for(int i = 0; i < n; i++)
+	{
+		scanf("%lld", &arr[i]);
+	}
+	for(int i = 0; i < n; i++)
+	{
+		can_bac_hai(arr[i]);
+	}
+}
+*/
+
+
+
+
+
+//Trinh tham - Trinh thám-------------------------------------------------------------------------
+/*
+main()
+{
+	int n, k, i, j, max;
+	std::vector <int>max_arr;
+	scanf("%d %d", &n, &k);
+	int arr[n + 1];
+	for(i = 0; i < n; i++)
+	{
+		scanf("%d", &arr[i]);
+	}
+	for(i = 0; i < (n - k + 1); i++)
+	{
+		max = arr[i];
+		for(j = i; j < (i + k); j++)
+		{
+			if(max < arr[j])max = arr[j];
+		}
+		max_arr.push_back(max);
+	}
+	for(i = 0; i < max_arr.size(); i++)
+	{
+		printf("%d ", max_arr[i]);
+	}
+}
+*/
+
+
+
+
+
+
+//Sai khac (ban de) - Sai khác (bản dễ)------------------------------------------------------------------
+/*
+main()
+{
+	int n, i, j, sum = 0;
+	scanf("%d", &n);
+	int arr[n];
+	for(i = 0; i < n; i++)
+	{
+		scanf("%d", &arr[i]);
+	}
+	for(i = 0; i < n - 1; i++)
+	{
+		for(j = i + 1; j < n; j++)
+		{
+			if(arr[i] >= arr[j])sum += arr[i] - arr[j];
+			else sum += arr[j] - arr[i];
+		}
+	}
+	printf("%d", sum);
+}
+*/
+
+
+
+
+
+//Lai la sai khac - Lại là sai khác------------------------------------------------------------------
+//Nhận xét: Kế thừa của Sai khac (ban de) - Sai khác (bản dễ)
+/*
+long long khoang_cach(long long a, long long b)
+{
+	if(a - b >= 0)return a - b;
+	else return b - a;
+}
+
+
+main()
+{
+	long long counting_sort[80000] = {0};
+	long long n, i, j, sum = 0, so;
+	scanf("%lld", &n);
+	std::vector <long long> arr;
+	for(i = 0; i < n; i++)
+	{
+		scanf("%lld", &so);
+		counting_sort[32768 + so]++;
+	}
+	for(so = 0; so < 32768 * 2 + 10; so++)
+	{
+		while(counting_sort[so] != 0)
+		{
+			arr.push_back(so - 32768);
+			counting_sort[so]--;
+		}
+	}
+	for(i = 0; (n - 1 - i * 2 > 0); i++)
+	{
+		sum += (n - 1 - i * 2) * khoang_cach(arr[i], arr[n - i - 1]);
+	}
+	printf("%lld", sum);
+}
+*/
+
+
+
+
+
+
+//Tach So - Tách Số------------------------------------------------------------------------
+/*
+main()
+{
+	long long n, i;
+	bool is_prime;
+	scanf("%lld", &n);
+	std::vector <long long> phan_tach;
+	while(n != 1)
+	{
+		is_prime = true;
+		for(i = 2; i <= sqrt(n); i++)
+		{
+			if(n % i == 0)
+			{
+				is_prime = false;
+				n = n / i;
+				phan_tach.push_back(i);
+				break;
+			}
+		}
+		if(is_prime == false)continue;
+		phan_tach.push_back(n);
+		n = 1;
+	}
+	printf("%lld", phan_tach.size());
+}
+*/
+
+
+//Dem so cap co tong chan - Đếm số cặp có tổng chẵn-------------------------------------------------------------------
+/*
+int main()
+{
+	long long n, i, j;
+	scanf("%lld", &n);
+	long long so, dem_chan = 0, dem_le = 0, res = 0;
+	for(i = 0; i < n; i++)
+	{
+		scanf("%lld", &so);
+		if(so % 2 == 0)dem_chan++;
+		else dem_le++;
+	}
+	if(dem_chan <= 1)res += 0;
+	else(res += ((dem_chan - 1) * dem_chan) / 2);
+	if(dem_le <= 1)res += 0;
+	else(res += ((dem_le - 1) * dem_le) / 2);
+	printf("%lld", res);
+}
+*/
+
+
+/*
+int main(){
+	unsigned long long int n,nmoi, i, j, x, y, buocnhay = 1;
+	scanf("%llu", &n);
+	for(i = 1; i < 100000000000000; i++){
+		if(buocnhay <= n && n <= buocnhay + i){
+			nmoi = n - buocnhay;
+			if(i % 2 == 0){
+				x = i + 1; y = 1;
+				x -= nmoi; y += nmoi;
+			}
+			else{
+				x = 1; y = i + 1;
+				x += nmoi; y -= nmoi;
+			}
+			break;
+		}
+		buocnhay = buocnhay + i + 1;
+		
+	}
+	printf("%llu %llu", x, y);
+}
+*/
+
+
+
+//Dao nguoc nhom phan tu - Đảo ngược nhóm phần tử--------------------------------------------------------------------------
+/*
+main()
+{
+	long long i, j, n, k;
+	scanf("%lld %lld", &n, &k);
+	long long arr[n];
+	for(i = 0; i < n; i++)
+	{
+		scanf("%lld", &arr[i]);
+	}
+	for(i = 0; i < n - k; i += k)
+	{
+		for(j = i + k - 1; j >= i; j--)
+		{
+			printf("%lld ", arr[j]);
+		}
+	}
+	for(j = n - 1; j >= i; j--)
+	{
+		printf("%lld ", arr[j]);
+	}
+}
+*/
+
+
+
+
+//Diem cuoi cung cua hinh chu nhat - Điểm cuối cùng của hình chữ nhật----------------------------------------------------------------
+/*
+main()
+{
+	long long x1, y1, x2, y2, x3, y3;
+	scanf("%lld %lld %lld %lld %lld %lld"
+	, &x1, &y1, &x2, &y2, &x3, &y3);
+	if((x1 - x2) * (x3 - x1) + (y1 - y2) * (y3 - y1) == 0)
+	{
+		printf("%lld %lld", x3 + x2 - x1, y3 + y2 - y1);
+	}
+	if((x1 - x2) * (x3 - x2) + (y1 - y2) * (y3 - y2) == 0)
+	{
+		printf("%lld %lld", x1 + x3 - x2, y1 + y3 - y2);
+	}
+	if((x3 - x2) * (x3 - x1) + (y3 - y2) * (y3 - y1) == 0)
+	{
+		printf("%lld %lld", x1 + x2 - x3, y1 + y2 - y3);
+	}
+}
+*/
+
+
+
+//Lai la tong so cac so le lien tiep - Lại là tổng số các số lẻ liên tiếp----------------------------------------------------------------
+/*
+main()
+{
+	long long s1 = 0, s2 = 0, x, y, doicho, i;
+	scanf("%lld %lld", &x, &y);
+	if(x - y == 1 || y - x == 1)
+	{
+		printf("0");
+		return 0;
+	}
+	if(x < y)
+	{
+		doicho = x;
+		x = y;
+		y = doicho;
+	}
+	//Từ giờ x > y
+	i = x;
+	while(i == x || i % 2 == 0)i--;
+	x = i; i = y;
+	if(x == y)
+	{
+		printf("0");
+		return 0;
+	}
+	while(i == y || i % 2 == 0)i++;
+	y = i;
+	if(x * y < 0)
+	{
+		y = -y;
+		s1 = (x + 1) * ((x - 1) / 2 + 1) / 2;
+		s2 = (y + 1) * ((y - 1) / 2 + 1) / 2;
+		printf("%lld", s1 - s2);
+	}
+	else
+	{
+		if(x == y)
+		{
+			printf("%lld", x);
+			return 0;
+		}
+		printf("%lld", (x + y) * ((x - y) / 2 + 1) / 2);
+	}
+}
+*/
+
+
+
+
+//Sinh cac day nhi phan - Sinh các dãy nhị phân---------------------------------------------------------------------
+/*
+main()
+{
+	int n, i, j, so;
+	scanf("%d", &n);
+	for(j = 0; j < (1 << n); j++)
+	{
+		int arr[n] = {0};
+		if(j == 0)
+		{
+			for(i = 0; i < n; i++)
+			{
+				printf("%d", arr[i]);
+			}
+			printf("\n");
+			continue;
+		}
+		i = n;
+		so = j;
+		while(so != 0)
+		{
+			if(so >= (1 << i))
+			{
+				arr[n - i - 1] = 1;
+				so -= (1 << i);
+			}
+			i--;
+		}
+		for(i = 0; i < n; i++)
+		{
+			printf("%d", arr[i]);
+		}
+		printf("\n");
+	}
+}
+*/
+
+
+
+
+
+//0.Cat Ruy Bang - 0.Cắt Ruy Băng---------------------------------------------------------------------------------
+/*
+main()
+{
+	std::vector<int> dem;
+	int n, arr[3], a, b, c, i, j, k, doicho, max;
+	scanf("%d", &n);
+	for(i = 0; i < 3; i++)
+	{
+		scanf("%d", &arr[i]);
+	}
+	for(i = 0; i < 3; i++)
+	{
+		for(j = 0; j < 2; j++)
+		{
+			if(arr[j] < arr[j + 1])
+			{
+				doicho = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = doicho;
+			}
+		}
+	}
+	a = arr[0]; b = arr[1]; c = arr[2];
+	// printf("%d %d %d", a, b, c);
+	if(n % c == 0)
+	{
+		printf("%d", n / c);
+		return 0;
+	}
+	for(i = 0; i < 4000; i += c)
+	{
+		if(n - i < 0)continue;
+		if((n - i) % b == 0)
+		{
+			dem.push_back(i / c + (n - i) / b);
+		}
+		for(j = 0; j < 4000; j += b)
+		{
+			if((n - i - j) < 0)break;
+			if((n - i - j) % a == 0)
+			{
+				dem.push_back(i / c + j / b + (n - i - j) / a);
+			}
+		}
+		if((n - i - j) < 0)continue;
+	}
+	max = dem[0];
+	for(i = 0; i < dem.size(); i++)
+	{
+		if(dem[i] > max)max = dem[i];
+	}
+	printf("%d", max);
+}
+*/
+
+
+
+
+
+
+//Rut gon tap hop so nguyen--------------------------------------------------------------------------------------------
+/*
+int co_chua[100000] = {0};
+
+main()
+{
+	int n, so, i;
+	scanf("%d", &n);
+	int arr[n];
+	for(i = 0; i < n; i++)
+	{
+		scanf("%d", &arr[i]);
+	}
+	for(i = 0; i < n; i++)
+	{
+		if(co_chua[arr[i] + 40000] == 0)
+		{
+			printf("%d ", arr[i]);
+			co_chua[arr[i] + 40000] = 1;
+		}
+	}
+}
+*/
+
+
+
+
+//Tong ba da thuc - Tổng ba đa thức--------------------------------------------------------------------------------
+/*
+double a[100002] = {0}, b[100002] = {0}, c[100002] = {0}; 
+
+
+main()
+{
+	std::vector <double> d;
+	int n, m, k, max, i;
+	scanf("%d", &n);
+	for(i = 0; i <= n; i++)
+	{
+		scanf("%lf", &a[i]);
+	}
+	scanf("%d", &m);
+	for(i = 0; i <= m; i++)
+	{
+		scanf("%lf", &b[i]);
+	}
+	scanf("%d", &k);
+	for(i = 0; i <= k; i++)
+	{
+		scanf("%lf", &c[i]);
+	}
+	max = n;
+	if(max < m)max = m;
+	if(max < k)max = k;
+	for(i = 0; i <= max; i++)
+	{
+		d.push_back(a[i] + b[i] + c[i]);
+	}
+	for(i = max; i >= 0; i--)
+	{
+		if(d[i] == 0)
+		{
+			max--;
+		}
+		else break;
+	}
+	if(max == -1)
+	{
+		printf("0.00");
+		return 0;
+	}
+	for(i = 0; i <= max; i++)
+	{
+		printf("%.2lf ", d[i]);
+	}
+}
+*/
+
+
+
+
+//Dem so nghiem phuong trinh trung phuong - Đếm số nghiệm phương trình trùng phương-----------------------------------------------------
+/*
+main()
+{
+	double a, b, c;
+	scanf("%lf %lf %lf", &a, &b, &c);
+	double dt = b * b - 4 * a * c;
+	if (dt < 0)
+	{
+		printf("0");
+		return 0;
+	}
+	double m = (-b - sqrt(dt)) / (2 * a);
+	double n = (-b + sqrt(dt)) / (2 * a);
+	if (a == 0 && b == 0 && c == 0)
+	{
+		printf("-1");
+		return 0;
+	}
+	if (a == 0 && b != 0 && c == 0)
+	{
+		printf("1");
+		return 0;
+	}
+	if (a == 0 && b != 0 && c != 0)
+	{
+		if ((-c / b) > 0)
+		{
+			printf("2");
+		}
+		else
+			printf("0");
+		return 0;
+	}
+	if (a != 0 && b == 0 && c == 0)
+	{
+		printf("1");
+		return 0;
+	}
+	if (a != 0 && b == 0 && c != 0)
+	{
+		if ((-c / a) > 0)
+		{
+			printf("2");
+		}
+		else
+			printf("0");
+		return 0;
+	}
+	if(dt < 0)
+	{
+		printf("0");
+		return 0;
+	}
+	if(dt == 0)
+	{
+		if((-b/(2 * a)) > 0)printf("2");
+		else if(b == 0)printf("1");
+		else printf("0");
+		return 0;
+	}
+	if(dt > 0)
+	{
+		if(m > 0)
+		{
+			if(n > 0)printf("4");
+			if(n == 0)printf("3");
+			if(n < 0)printf("2");
+			return 0;
+		}
+		if(n > 0)
+		{
+			if(m > 0)printf("4");
+			if(m == 0)printf("3");
+			if(m < 0)printf("2");
+			return 0;
+		}
+		if(m == 0)
+		{
+			if(n > 0)printf("3");
+			if(n == 0)printf("2");
+			if(n < 0)printf("1");
+			return 0;
+		}
+		if(n == 0)
+		{
+			if(m > 0)printf("3");
+			if(m == 0)printf("2");
+			if(m < 0)printf("1");
+			return 0;
+		}
+		printf("0");
+	}
+}
+*/
+
+
+
+
+
+
+//0.Tang hoa Crush - 0.Tặng hoa Crush-----------------------------------------------------------------------------
+/*
+main()
+{
+	long long n , m, i, j, sum = 0, sub_s;
+	scanf("%lld %lld", &n, &m);
+	long long arr[n + 1], a[m + 1], b[m + 1];
+	for(i = 1; i <= n; i++)
+	{
+		scanf("%lld", &arr[i]);
+	}
+	for(i = 1; i <= m; i++)
+	{
+		scanf("%lld %lld", &a[i], &b[i]);
+	}
+	for(i = 1; i <= m; i++)
+	{
+		sub_s = 0;
+		for(j = a[i]; j <= b[i]; j++)
+		{
+			sub_s += arr[j];
+		}
+		if(sub_s > 0)sum += sub_s;
+	}
+	printf("%lld", sum);
+}
+*/
+
+
+
+
+
+
+//Tinh gan dung tich phan - Tính gần đúng tích phân---------------------------------------------------------------------
+//Nhận xét: Khai triển sinx thành chuỗi vô tận và biến đổi theo
+/*
+//Lũy thừa cùi
+double luy_thua_cui(double a, double b)
+{
+	double tich = 1;
+	while(b != 0)
+	{
+		tich *= a;
+		b--;
+	}
+	return tich;
+}
+
+
+//Giai thừa cùi
+double giai_thua_cui(double n)
+{
+	while(n == 1)return 1;
+	return n * giai_thua_cui(n - 1);
+}
+
+
+
+
+main()
+{
+	int t, i, j;
+	scanf("%d", &t);
+	double res[t] = {0};
+	for(i = 0; i < t; i++)
+	{
+		double a, b;
+		scanf("%lf %lf", &a, &b);
+		for(j = 1; j < 100; j++)
+		{
+			res[i] -= luy_thua_cui(-1, j + 1) * luy_thua_cui(a, 2 * j - 1)
+				 / (giai_thua_cui(2 * j - 1) * (2 * j - 1));
+			res[i] += luy_thua_cui(-1, j + 1) * luy_thua_cui(b, 2 * j - 1)
+				 / (giai_thua_cui(2 * j - 1) * (2 * j - 1));
+		}
+	}
+	for(i = 0; i < t; i++)
+	{
+		printf("%lf\n", res[i]);
+	}
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+//Sieu giai thua - Siêu giai thừa-----------------------------------------------------------------------
+/*
+//~4h
+main()
+{
+	long long n, so_0 = 0, res = 1, i, time = 0;
+	long long ok = 1, up = 0, up_res = 0, up_so_0 = 0;
+	std::vector<int> so_0_phai_tru;
+	scanf("%lld", &n);
+	if(n == 0)
+	{
+	    printf("0");
+	    return 0;
+	}
+	while(!(so_0 >= n))
+	{
+		so_0 += res;
+		res *= 5;
+		so_0_phai_tru.push_back(so_0);
+	}
+	
+	i = so_0_phai_tru.size() - 2;
+	while(!(so_0 == n))
+	{
+		if(so_0 - i - 1 <= n)
+		{
+			break;
+		}
+		if(ok == 1)
+		{
+			res /= 5;
+			so_0 = so_0_phai_tru[i];
+			ok = 0;
+			up_res = res;
+			up_so_0 = so_0;
+		}
+		else
+		{
+			res = up_res;
+			so_0 = up_so_0;
+		}
+		while(!(so_0 >= n))
+		{
+			so_0 += so_0_phai_tru[i];
+			res += pow(5, i + 1);
+			time++;	
+		}
+		up_res += pow(5, i + 1) * (time - 1);
+		up_so_0 += so_0_phai_tru[i] * (time - 1);
+		time = 0;
+		i--;
+	}
+	printf("%lld", res);
+}
+*/
+
+
+
+
+
+//Phan tu ap dao - Phần tử áp đảo-----------------------------------------------------------------------------
+/*
+int main()
+{
+	int n, max, dem_max = 0, so_max;
+	scanf("%d", &n);
+	int arr[n];
+	for(int i = 0; i < n; i++)
+	{
+		scanf("%d", &arr[i]);
+	}
+	//Goi ham
+	std::sort(arr + 0, arr + n + 1);
+	for(int i = 0; i < n; i++)
+	{
+		int j = i, dem;
+		int so = arr[i];
+		while(!(arr[j] != so || j >= n))
+		{
+			j++;
+		}
+		dem = j - i;
+		if(dem > dem_max)
+		{
+			dem_max = dem;
+			so_max = arr[i];
+		}
+		i = j;
+	}
+	if(2 * dem_max > n)
+	{
+		printf("%d", so_max);
+	}
+	else
+	{
+		printf("khong co phan tu ap dao");	
+	}
+} 
+*/
+
+
+
+
+
+
+
+
+
+//Luong nuoc - lượng nước---------------------------------------------------------------------------------------
+/*
+int main()
+{
+	long long n, i, j, max_trai, max_phai, min, res = 0, pos_max_phai;
+	scanf("%lld", &n);
+	long long arr[n]; 
+	std::vector<long long> sub_arr;
+	for(i = 0; i < n; i++)
+	{
+		scanf("%lld", &arr[i]);
+	}
+	for(i = 0; i < n - 1; )
+	{
+		if(arr[i] > arr[i + 1])
+		{
+			sub_arr.clear();
+			j = i + 1;
+			max_trai = arr[i];
+			max_phai = arr[j];
+			pos_max_phai = j;
+			while(j < n)
+			{
+				sub_arr.push_back(arr[j]);
+				if(max_phai < arr[j])
+				{
+					max_phai = arr[j];
+					pos_max_phai = j;
+					if(max_trai <= max_phai)break;
+				}
+				j++;
+			}
+			//khong tim duoc max_trai <= max_phai
+			if(!(max_trai <= max_phai))
+			{
+				for(int k = 0; k < pos_max_phai - i - 1; k++)
+				{
+					res += max_phai - sub_arr[k];
+				}
+				i = pos_max_phai;
+			}
+			else
+			{
+				for(int k = 0; k < sub_arr.size() - 1; k++)
+				{
+					res += max_trai - sub_arr[k];
+				}
+				i = j;
+			}
+			continue;
+		}
+		i++;
+	}
+	printf("%lld", res);
+}
+*/
+
+
+
+
+
+
+
+
+
+//He phuong trinh - Hệ phương trình------------------------------------------------------------------------------------
+/*
+std::string DecToBinary(int a)
+{
+	int mu = 1, j = 0;
+	std::string str;
+	while(a >= (1 << mu))
+	{
+		mu++;
+	}
+	mu--;
+	while(!(mu == -1))
+	{
+		if(a >= (1 << mu))
+		{
+			a -= (1 << mu);
+			str.push_back(49);
+		} 
+		else str.push_back(48);	
+		mu--;
+
+	}
+	return str;	
+}
+
+
+
+
+void is_exist_x(int a, int b, int c, int d)
+{
+	int max_size = 0;
+	int exist_x = 1;
+	std::string strA = DecToBinary(a), strB = DecToBinary(b),
+				strC = DecToBinary(c), strD = DecToBinary(d);
+	//Trung hoa kich thuoc mang
+	int strA_len = strA.size(), strB_len = strB.size()
+		, strC_len = strC.size(), strD_len = strD.size();
+	max_size = strA_len;
+	if(max_size < strB_len)max_size = strB_len;
+	if(max_size < strC_len)max_size = strC_len;
+	if(max_size < strD_len)max_size = strD_len;
+	while(max_size != strA_len)
+	{
+		strA.insert(0, 1, '0');
+		strA_len++;
+	}
+	while(max_size != strB_len)
+	{
+		strB.insert(0, 1, '0');
+		strB_len++;
+	}
+	while(max_size != strC_len)
+	{
+		strC.insert(0, 1, '0');
+		strC_len++;
+	}
+	while(max_size != strD_len)
+	{
+		strD.insert(0, 1, '0');
+		strD_len++;
+	}			
+	for(int i = 0; i < max_size; i++)
+	{
+		if(strC[i] == '0' && strD[i] == '0')
+		{
+			if((0 || (strA[i] - 48)) == (strB[i] - 48)){}
+			else if(1 || (strA[i] - 48) == (strB[i] - 48)){}
+			else
+			{
+				exist_x = 0;
+				break;
+			}
+		}
+		else if(strC[i] == '1' && strD[i] == '0')
+		{
+			if((0 || (strA[i] - 48)) == (strB[i] - 48)){}
+			else
+			{
+				exist_x = 0;
+				break;
+			}
+		}
+		else if(strC[i] == '0' && strD[i] == '1')
+		{
+			exist_x = 0;
+			break;
+		}
+		else
+		{
+			if((1 || (strA[i] - 48)) == (strB[i] - 48)){}
+			else
+			{
+				exist_x = 0;
+				break;				
+			}
+		}
+	}
+	if(exist_x == 1)printf("YES");
+	else printf("NO");
+	printf("\n");
+}
+
+
+
+main()
+{
+	int t;
+	scanf("%d", &t);
+	int a[t], b[t], c[t], d[t];
+	for(int i = 0; i < t; i++)
+	{
+		scanf("%d %d %d %d", &a[i], &b[i], &c[i], &d[i]);
+	}
+	for(int i = 0; i < t; i++)
+	{
+		is_exist_x(a[i], b[i], c[i], d[i]);
+	}
+}
+*/
+
+
+
+
+
+
+
+//t2r2. Tich cua day cap so cong - t2r2. Tích của dãy cấp số cộng----------------------------------------
+/*
+main(){
+    long long n, k, i, j, res = 0, tich, num;
+    scanf("%lld %lld",&n,&k);	
+    if(n % k == 0)
+    {
+    	tich = 1;
+    	for(i = k; i <= n; i += k){
+			tich *= i;
+		}
+		res = tich;
+	}
+	else
+	{
+		for(j = 1; j <= (n % k); j++)
+		{
+			tich = 1;
+			for(i = j; i <= n; i += k){
+				tich *= i;
+			}
+			if(res < tich)res = tich;
+		}		
+	}
+	printf("%lld", res);
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+//Tim so biet tong cua no voi cac chu so cua no - Tìm số biết tổng của nó với các chữ số của nó-------------------------------------
+/*
+int mu(int a, int b)
+{
+	if(b == 0)return 1;
+	return a * mu(a, b - 1);
+}
+
+
+int main()
+{
+	int n;
+	scanf("%d", &n);
+	int so_chu_so = 0;
+	int is_exist = 0;
+	while(!(n < mu(10, so_chu_so)))so_chu_so++;
+	for(int i = n - so_chu_so * 9; i <= n; i++)
+	{
+		int so = i, sub_res = so;
+		while(so != 0)
+		{	
+			sub_res += so % 10;
+			so = (so - so % 10) / 10; 
+		}
+		if(sub_res == n)printf("%d ", i), is_exist = 1;
+	}
+	if(!is_exist)printf("-1");
+}
+*/
+
+
+
+
+//Xay dung nha------------------------------------------------------------
+/*
+int main()
+{
+	double a, b, c;
+	scanf("%lf", &a);
+	while(!(a == 0))
+	{
+		scanf("%lf %lf", &b, &c);
+		printf("%.0lf", floor(sqrt(a * b * (100.0 / c))));
+		scanf("%lf", &a);
+	}
+}
+*/
+
+
+
+
+//Sap xep co dieu kien------------------------------------------------------------------------------------------
+/*
+void output(int arr[], int n);
+
+
+void weak_sort(int arr[], int n)
+{
+	int swap;
+	for(int i = 0; i < n; i++)
+	{
+		for(int j = 0; j < n - 1; j++)
+		{
+			if(arr[j] > arr[j + 1])
+			{
+				swap = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = swap;
+			}
+		}
+	}
+	output(arr, n);
+}
+
+
+void output(int arr[], int n)
+{
+	for(int i = 0; i < n; i++)
+	{
+		printf("%d ", arr[i]);
+	}
+}
+
+
+int main()
+{
+	int n, so, k = 0, m = 0, p = 0;
+	scanf("%d", &n);
+	int du_0[n], du_1[n], du_2[n];
+	for(int i = 0; i < n;i++)
+	{
+		scanf("%d", &so);
+		if(so % 3 == 0)du_0[k] = so, k++;
+		if(so % 3 == 1)du_1[m] = so, m++;
+		if(so % 3 == 2)du_2[p] = so, p++;
+	}
+	weak_sort(du_0, k);
+	weak_sort(du_1, m);
+	weak_sort(du_2, p);
+}
+*/
+
+
+
+
+//Bien doi ky tu hoa, ky tu thuong tren xau-------------------------------------------------
+/*
+int main()
+{
+	std::string s;
+	std::cin >> s;
+	std::cout << s << std::endl;
+	std::string str = s;
+	for(int i = 0; i < s.size(); i++)
+	{
+		if(str[i] >= 'A' && str[i] <= 'Z')str[i] += 32;
+		else str[i] -= 32;
+	}
+	std::cout << str << std::endl;
+	str = s;
+	for(int i = 0; i < s.size(); i++)
+	{
+		if(str[i] >= 'a' && str[i] <= 'z')str[i] -= 32;
+	}	
+	std::cout << str << std::endl;	
+	str = s;
+	for(int i = 0; i < s.size(); i++)
+	{
+		if(str[i] >= 'A' && str[i] <= 'Z')str[i] += 32;
+	}	
+	std::cout << str << std::endl;	
+	str = s;
+	for(int i = 0; i < s.size(); i++)
+	{
+		if(str[i] == 'a' || str[i] == 'A')str[i] = 'a';
+		else if(str[i] == 'e' || str[i] == 'E')str[i] = 'e';
+		else if(str[i] == 'i' || str[i] == 'I')str[i] = 'i';
+		else if(str[i] == 'o' || str[i] == 'O')str[i] = 'o';
+		else if(str[i] == 'u' || str[i] == 'U')str[i] = 'u';		
+		else if(str[i] >= 'a' && str[i] <= 'z')str[i] -= 32;	
+	}	
+	std::cout << str << std::endl;
+	str = s;
+	for(int i = 0; i < s.size(); i++)
+	{
+		if(i % 2 == 0)
+		{
+			if(str[i] >= 'a' && str[i] <= 'z')str[i] -= 32;
+		}
+		else
+		{
+			if(str[i] >= 'A' && str[i] <= 'Z')str[i] += 32;
+		}
+	}	
+	std::cout << str << std::endl;	
+}
+*/
+
+
+
+
+
+
+
+
+//Phan tu dang truoc xa nhat---------------------------------------------------------------------------------------------
+/*
+int main()
+{
+	long long n;
+	scanf("%lld", &n);
+	long long arr[n];
+	for(int i = 0; i < n; i++)
+	{
+		scanf("%lld", &arr[i]);
+	}
+	long long max = arr[0], min = arr[0], kc1, kc2;
+	for(int i = 1; i < n; i++)
+	{
+		
+		kc1 = (max - arr[i] > 0)?(max - arr[i]):(arr[i] - max);
+		kc2 = (min - arr[i] > 0)?(min - arr[i]):(arr[i] - min);
+		printf("%lld ", (kc1 > kc2)?kc1:kc2);
+		if(max < arr[i])max = arr[i];
+		if(min > arr[i])min = arr[i];
+	}
+}
+*/
+
+
+
+
+
+
+//So dien thoai---------------------------------------------------------------------------------------
+/*
+int main()
+{
+	char number[1000];
+	scanf("%s", number);
+	int len;
+	for(len = 0; !(number[len] == '\0'); len++)
+	{
+	}
+	if(number[0] == '0' && number[len - 1] != '4'
+		&& number[len - 1] != '7' && number[len - 1] != '0'
+		&& len == 10)printf("YES");
+	else printf("NO");
+}
+*/
+
+
+
+
+//Dem so cap cot dien bang nhau--------------------------------------------------------------------------
+/*
+int main()
+{
+	long long n, res = 0, so;
+	scanf("%lld", &n);
+	long long count[100001] = {0};
+	while(n != 0)
+	{
+		scanf("%lld", &so);
+		count[so]++;
+		n--;
+	}
+	for(int i = 1; i < 100001; i++)
+	{
+		if(count[i] >= 2)res += (count[i] - 1) * count[i] / 2;
+	}
+	printf("%lld", res);
+}
+*/
+
+
+
+
+
+
+
+
+
+//Tong chuoi dieu hoa - Tổng chuỗi điều hòa--------------------------------------------------------
+/*
+unsigned long long uoc_chung_lon_nhat(unsigned long long a, unsigned long long b)
+{
+    if(a == b)return a;
+    else if(a > b)return uoc_chung_lon_nhat(a - b, b);
+    return uoc_chung_lon_nhat(a, b - a);
+}
+
+unsigned long long boi_chung_nho_nhat(unsigned long long a, unsigned long long b)
+{
+	return a * b;
+}
+
+
+
+int main()
+{
+    unsigned long long mau, mau_chung, he_so_chung,tu, t, number, i;
+    scanf("%llu", &t);
+    while(t != 0)
+    {
+    	mau = 1, tu = 1;
+        scanf("%llu", &number);
+        for(i = 2; i <= number; i++)
+        {	
+        	mau_chung = boi_chung_nho_nhat(mau, i);
+        	tu = mau_chung / mau*tu + mau_chung / i;
+			mau = mau_chung;
+			he_so_chung = uoc_chung_lon_nhat(tu, mau);
+			tu /= he_so_chung;
+			mau /= he_so_chung;
+        }
+        printf("%llu/%llu", tu, mau);
+        t--;
+    }
+}
+*/
+
+
+
+
+
+//Max + 1---------------------------------------------------------------------------------------------
+/*
+int main()
+{
+	int n, dem = 0, max;
+	scanf("%d", &n);
+	int arr[n];
+	for(int i = 0; i < n; i++)
+	{
+		scanf("%d", &arr[i]);
+	}
+	max = arr[0];
+	for(int i = 0; i < n - 1; i++)
+	{
+		if(arr[i] >= arr[i + 1])arr[i + 1] = max + 1, dem++;
+		if(max < arr[i + 1])max = arr[i + 1];
+	}
+	printf("%d", dem);
+}
+*/
+
+
+
+
+//Anh hung ban phim - Anh hùng bàn phím-------------------------------------------------------------------------------------
+/*
+int main()
+{
+	int i, tt = 0, n;
+	unsigned long long res, mod = 1000000007;
+	char str[1001];
+	scanf("%d", &n);
+	while(tt != n)
+	{
+		res = 1, i = 1;
+		scanf("%s", str);
+		//Truong hop dac biet
+		if(str[1] == '\0')
+		{
+			printf("#Case %d: 1\n", tt + 1);
+			tt++;
+			continue;
+		}
+		//Phan tu dau
+		if(str[0] != str[1])
+		{
+			res *= 2;
+		}
+		//Phan tu giua
+		while(!(str[i + 1] == '\0'))
+		{
+			if(str[i - 1] != str[i] && str[i] != str[i + 1])
+			{
+				if(str[i - 1] != str[i + 1])res = (res * 3) % mod;
+				else res = (res * 2) % mod;
+			}
+			else if(str[i] != str[i - 1])res = (res * 2) % mod;
+			else if(str[i] != str[i + 1])res = (res * 2) % mod;	
+			i++;		
+		}
+		//Phan tu cuoi
+		if(str[i - 1] != str[i])
+		{
+			res = (res * 2) % mod;
+		}
+		printf("#Case %d: %llu\n", tt + 1, res);
+		tt++;
+	}
+}
+*/
+
+
+
+
+
+
+//Tam Hau - Tám Hậu---------------------------------------------------------------------------------
+/*
+int check(int size, int hang, int cot, bool hang_co_hau[], bool cheo_chinh_co_hau[], bool cheo_phu_co_hau[])
+{
+    if(hang_co_hau[hang] || cheo_chinh_co_hau[hang - cot + size] || cheo_phu_co_hau[hang + cot] || hang == cot || hang + cot == size - 1)return false;
+    return true;
+}
+
+
+
+void count(int size, int hang, int cot, int &res, bool hang_co_hau[], bool cheo_chinh_co_hau[], bool cheo_phu_co_hau[])
+{
+    for(int hang = 0; hang < size; hang++)
+    {
+        if(check(size, hang, cot, hang_co_hau, cheo_chinh_co_hau, cheo_phu_co_hau))
+        {
+            hang_co_hau[hang] = true;
+            cheo_chinh_co_hau[hang - cot + size] = true;
+            cheo_phu_co_hau[hang + cot] = true;
+            if(cot == size - 1)res++;
+            else count(size, 0, cot + 1, res, hang_co_hau, cheo_chinh_co_hau, cheo_phu_co_hau);
+            hang_co_hau[hang] = false;
+            cheo_chinh_co_hau[hang - cot + size] = false;
+            cheo_phu_co_hau[hang + cot] = false;
+        }
+    }
+}
+
+
+
+
+
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+    bool hang_co_hau[n], cheo_chinh_co_hau[2 * n], cheo_phu_co_hau[2 * n];
+    for(int i = 0; i < n; i++)
+    {
+        hang_co_hau[i] = false;
+    }
+    for(int i = 0; i < 2 * n; i++)
+    {
+        cheo_chinh_co_hau[i] = false;
+        cheo_phu_co_hau[i] = false;        
+    }
+    int res = 0;
+    count(n, 0, 0, res, hang_co_hau, cheo_chinh_co_hau, cheo_phu_co_hau);
+    printf("%d", res);
+}
+*/
+
+
+
+
+
+
+
+//Chia gao - Chia gạo----------------------------------------------------------------
+/*
+int distance(std::vector <int> arr)
+{
+	int s1 = arr[0] + arr[1] + arr[2];
+	int s2 = arr[3] + arr[4] + arr[5];
+	int s3 = arr[6] + arr[7] + arr[8];
+	int max = s1, min = s1;
+	if(max < s2)max = s2;
+	if(max < s3)max = s3;
+	if(min > s2)min = s2;
+	if(min > s3)min = s3;
+	return max - min;
+}
+
+
+void rice_division(int arr[], int count, int &res, std::vector <int> rice, bool picked[])
+{
+	for(int i = 0; i < 9; i++)
+	{
+		if(!picked[i])
+		{
+			rice.push_back(arr[i]);
+			picked[i] = true;
+			if(count == 8)
+			{
+				int value = distance(rice);
+				// printf("%d\n", value);
+				if(res > value)res = value;	
+			}
+			else rice_division(arr, count + 1, res, rice, picked);
+			rice.pop_back();
+			picked[i] = false;
+		}
+	}
+}
+
+
+
+int main()
+{
+	int arr[9];
+	int res = 100000;
+	std::vector <int> rice;
+	bool picked[9];
+	for(int i = 0; i < 9; i++)
+	{
+		scanf("%d", &arr[i]);
+		picked[i] = false;
+	}
+	rice_division(arr, 0, res, rice, picked);
+	printf("%d", res);
+}
+*/
+
+
+
+
+
+
+
+
+
+//Lật bit trong khoảng-----------------------------------------------------------------------------------------------
+/*
+#include <stdio.h>
+char str[2000000];
+int pos1[2000000], pos2[2000000];
+main(){
+	scanf("%s", str);
+	int q, l, r, value = 0;
+	scanf("%d", &q);
+	while(q != 0){
+		scanf("%d %d", &l, &r);
+		pos1[l]++;pos2[r + 1]++;
+		q--;
+	}
+	for(int i = 0; !(str[i] == '\0'); i++){
+		value += pos1[i] + pos2[i];
+		//le thi doi
+		if(value & 1)str[i] = (~(str[i] - 48)) + 50;
+	}
+	printf("%s", str);
+}
+*/
+
+
+
+
+
+
+//Lại là dãy con đơn điệu tăng dài nhất-----------------------------------------------------------------------------
+/*
+main(){
+	long long n, i, j = 0, m;
+	scanf("%lld", &n);
+	long long arr[n];
+    long long pos[n];
+    long long pos_size = 0;
+	for(int i = 0; i < n ; i++){
+		scanf("%lld", &arr[i]);
+	}
+    pos[0] = arr[i];
+    pos_size++;
+	for(i = 0; i < n; i++){
+        for(j = pos_size - 1; j >= 0; j--){
+                if(arr[i] > pos[j]){
+                    if(j == pos_size - 1){
+                        pos[j + 1] = arr[i];
+                        pos_size++;
+                    }
+                    else{
+                        if(pos[j + 1] > arr[i]){
+                            pos[j + 1] = arr[i];
+                        }
+                    }
+                    break;
+                }
+
+        }
+        
+        if(j <= -1){
+            if (pos[j + 1] > arr[i])
+            {
+                pos[j + 1] = arr[i];
+            }
+        }
+	}
+    printf("%lld", pos_size);
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Tổng trên hình chữ nhật--------------------------------------------------------------------------------
+/*
+long long m, n, q, i, j, r1, r2, c1, c2, nho;
+long long so;
+int main(){
+	scanf("%lld %lld %lld", &m, &n, &q);
+	long long d[m * n + 2 * m + n];	
+	for(i = 1; i <= m; i++){
+		nho = 0;
+		for(j = 1; j <= n; j++){
+			scanf("%lld", &so);
+			nho += so;
+			d[i * n + j] = d[(i - 1) * n + j] + nho;
+		}
+	}
+	while(q != 0){
+		scanf("%lld %lld %lld %lld", &r1, &r2, &c1, &c2);
+		printf("%lld\n", d[r2*n+c2] - ((r1 == 1)?0:(d[(r1 - 1)*n+c2])) - ((c1 == 1)?0:(d[r2*n+c1 - 1])) + ((c1 == 1 || r1 == 1)?0:(d[(r1 - 1) * n + c1 - 1])));
+		q--;
+	}
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Đếm số hoán vị lặp--------------------------------------------------------------------------------
+/*
+long long MOD = 1000000007;
+long long f[100000];
+
+long long fact(long long n){
+	if(f[n] != 0)return f[n];
+	return f[n] = (n % MOD * fact(n - 1) % MOD) % MOD;
+}
+
+
+long long turbo_exp(long long a, long long b)
+{
+	long long res = 1;
+	while(!(b == 0))
+	{
+		if(b % 2 != 0)res = (res * a) % MOD;
+		b = b / 2;
+		a = (a * a) % MOD;
+	}
+	return res;
+}
+
+
+
+main(){
+	f[0] = 1;
+	f[1] = 1;
+	long long c[256];
+	long long n, i, mau;
+	string str;
+	cin >> n;
+	while(n != 0){
+		for(i = 'A'; i <= 'Z'; i++){
+			c[i] = 0;
+		}
+		cin >> str;
+		mau = 1;
+		for(i = 0; str[i] != '\0'; i++){
+			c[str[i]]++;
+		}
+		for(i = 'A'; i < 'Z'; i++){
+			mau = (fact(c[i]) % MOD * mau % MOD) % MOD;
+		}
+		cout << (fact(str.size()) % MOD * turbo_exp(mau, MOD - 2) % MOD)%MOD << std::endl;
+		n--;
+	}
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+//Lại là Tính tổ hợp chập k của n--------------------------------------------------------------------------------------------
+/*
+#define MOD 1000000007
+long long f[100001];
+
+
+
+long long fact(long long n)
+{
+	if(n == 1)return 1;
+    if(f[n] != 0)return f[n] % MOD;
+	return f[n] = (n * fact(n - 1) % MOD);
+}
+
+long long tich(long long a, long long b)
+{
+	if(a == b)return b;
+	return (a * tich(a + 1, b));
+}
+
+
+long long turbo_exp(long long a, long long b)
+{
+	long long res = 1;
+	while(!(b == 0))
+	{
+		if(b % 2 != 0)res = (res * a) % MOD;
+		b = b / 2;
+		a = (a * a) % MOD;
+	}
+	return res;
+}
+
+
+long long c(long long n, long long k)
+{
+	if(n == k)return 1;
+	if(k == 0)return 1;
+	return (fact(n) % MOD * turbo_exp((fact(k) * fact(n - k)) % MOD, MOD - 2))%MOD;
+}
+
+int main()
+{
+	int t;
+	long long k, n;
+	scanf("%d", &t);
+	while(t != 0)
+	{
+		scanf("%lld %lld", &n, &k);
+		printf("%lld\n", c(n, k));
+		t--;
+	}
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Phân vùng ảnh--------------------------------------------------------------------------------------------
+/*
+typedef struct p{
+	int r;//hang i
+	int c;//cot  j
+}p;
+
+main(){
+	int m, n, i, j, value;
+	std::queue <p> search;
+	std::vector <int> res;
+	p temp;
+	std::cin >> m >> n;
+	int matrix[m + 2][n + 2];
+	int visited[m + 2][n + 2];
+	for(i = 1; i <= m; i++){
+		for(j = 1; j <= n; j++){
+			std::cin >> matrix[i][j];
+			visited[i][j] = 0;
+		}
+		//cho vanh khung bang 1;
+	}
+	for(i = 0; i <= n; i++){
+		matrix[0][i] = matrix[m + 1][i] = 1;
+	}
+	for(i = 0; i <= m; i++)
+		matrix[i][0] = matrix[i][n + 1] = 1;
+	for(i = 1; i <= m; i++){
+		for(j = 1; j <= n; j++){
+			if((!matrix[i][j]) && (!visited[i][j])){
+				value = 1;
+				temp.r = i;
+				temp.c = j;
+				visited[i][j] = 1;
+				search.push(temp);
+				while(!search.empty()){
+					int pos_i, pos_j;
+					pos_i = search.front().r;
+					pos_j = search.front().c;						
+					if((!matrix[pos_i][pos_j - 1]) && (!visited[pos_i][pos_j - 1]))
+					{
+						value++;
+						temp.r = pos_i;
+						temp.c = pos_j - 1;
+						visited[temp.r][temp.c] = 1;
+						search.push(temp);
+					}
+					if((!matrix[pos_i + 1][pos_j - 1]) && (!visited[pos_i + 1][pos_j - 1]))
+					{
+						value++;
+						temp.r = pos_i + 1;
+						temp.c = pos_j - 1;
+						visited[temp.r][temp.c] = 1;
+						search.push(temp);
+					}		
+					if((!matrix[pos_i + 1][pos_j]) && (!visited[pos_i + 1][pos_j]))
+					{
+						value++;
+						temp.r = pos_i + 1;
+						temp.c = pos_j;
+						visited[temp.r][temp.c] = 1;
+						search.push(temp);
+					}	
+					if((!matrix[pos_i + 1][pos_j + 1]) && (!visited[pos_i + 1][pos_j + 1]))
+					{
+						value++;
+						temp.r = pos_i + 1;
+						temp.c = pos_j + 1;
+						visited[temp.r][temp.c] = 1;
+						search.push(temp);
+					}			
+					if((!matrix[pos_i][pos_j + 1]) && (!visited[pos_i][pos_j + 1]))
+					{
+						value++;
+						temp.r = pos_i;
+						temp.c = pos_j + 1;
+						visited[temp.r][temp.c] = 1;
+						search.push(temp);
+					}					
+					if((!matrix[pos_i - 1][pos_j + 1]) && (!visited[pos_i - 1][pos_j + 1]))
+					{
+						value++;
+						temp.r = pos_i - 1;
+						temp.c = pos_j + 1;
+						visited[temp.r][temp.c] = 1;
+						search.push(temp);
+					}					
+					if((!matrix[pos_i - 1][pos_j]) && (!visited[pos_i - 1][pos_j]))
+					{
+						value++;
+						temp.r = pos_i - 1;
+						temp.c = pos_j;
+						visited[temp.r][temp.c] = 1;
+						search.push(temp);
+					}				
+					if((!matrix[pos_i - 1][pos_j - 1]) && (!visited[pos_i - 1][pos_j - 1]))
+					{
+						value++;
+						temp.r = pos_i - 1;
+						temp.c = pos_j - 1;
+						visited[temp.r][temp.c] = 1;
+						search.push(temp);
+					}																																		
+					search.pop();
+				}
+				res.push_back(value);		
+			}
+		}
+	}
+	std::sort(res.begin(), res.end());
+	std::cout << res.size() << std::endl;
+	for(i = 0; i < res.size(); i++){
+		std::cout << res[i] << " ";
+	}
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Lại là Thang Máy--------------------------------------------------------------------------------------------
+/*
+typedef struct step{
+	int value;
+	int step;
+}step;
+
+
+
+main(){
+	std::queue <step> search;
+	step temp;
+	int n, k, s, f, i;
+	std::cin >> n >> k;
+	int visited[n + 1], arr[k];
+	for(i = 1; i <= n; i++)
+		visited[i] = 0;
+	for(i = 0; i < k; i++){
+		std::cin >> arr[i];
+	}
+	std::cin >> s >> f;
+	//BFS
+	temp.value = s;
+	temp.step = 0;
+	search.push(temp);
+	visited[s] = 1;
+	while(!search.empty()){
+		if(search.front().value == f){
+			std::cout << search.front().step;
+			return 0;
+		}
+		for(i = 0; i < k; i++){
+			if(!visited[search.front().value + arr[i]]){
+				if(search.front().value + arr[i] >= 1 && search.front().value + arr[i] <= n){
+					visited[search.front().value + arr[i]] = 1;
+					temp.value = search.front().value + arr[i];
+					temp.step = search.front().step + 1;
+					search.push(temp);
+				}
+			}
+		}
+		search.pop();
+	}
+	std::cout << "-1";
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
