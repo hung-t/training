@@ -2831,6 +2831,347 @@ main(){
 
 
 
+//Bài toán đổi tiền--------------------------------------------------------------------------------------------
+/*
+typedef struct money{
+	int value;
+	int number;
+}money;
+
+
+
+main(){
+	std::queue <money> m;
+	money temp;
+	int n, q, i, M;
+	std::cin >> n >> q;
+	int arr[n];
+	for(i = 0; i < n; i++){
+		std::cin >> arr[i];
+	}
+	while(q != 0){
+		int visited[10001] = {0};
+		int check = 0;
+		std::cin >> M;
+		temp.value = 0;
+		temp.number = 0;
+		m.push(temp);
+		while(!m.empty()){
+			if(m.front().value == M)
+			{
+				std::cout << m.front().number;
+				check++;
+				while(!m.empty()){
+					m.pop();
+				}
+				break;
+			}
+			for(i = 0; i < n; i++){
+				if(m.front().value + arr[i] <= M){
+					if(!visited[m.front().value + arr[i]]){
+						visited[m.front().value + arr[i]] = 1;
+						temp.value = m.front().value + arr[i];
+						temp.number = m.front().number + 1;
+						m.push(temp);						
+					}
+
+				}
+			}
+			m.pop();
+		}
+		if(!check)std::cout << "-1";
+		std::cout << "\n";
+		q--;
+	}
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+//Nhập môn BFS----------------------------------------------------------------------------------------------------
+/*
+typedef struct move{
+	int r, c;
+	int step;
+}move;
+
+
+
+
+int main(){
+	int n, m, x1, y1, x2, y2;
+	std::queue<move> bfs;
+	move temp;
+	std::cin >> n >> m;
+	bool visited[n + 1][m + 2] = {false};
+	bool check = false;
+	std::cin >> x1 >> y1 >> x2 >> y2;
+	temp.r = x1;
+	temp.c = y1;
+	temp.step = 0;
+	visited[x1][y1] = true;
+	bfs.push(temp);
+	while(!bfs.empty()){
+		if(bfs.front().r == x2 && bfs.front().c == y2){
+			std::cout << bfs.front().step;
+			check = true;
+			while(!bfs.empty()){
+				bfs.pop();
+			}
+			break;
+		}
+		//Xet cac truong hop
+		if(bfs.front().r - 2 >= 1 && bfs.front().c - 1 >= 1){
+			if(!visited[bfs.front().r - 2][bfs.front().c - 1]){
+				temp.r = bfs.front().r - 2;
+				temp.c = bfs.front().c - 1;	
+				temp.step = bfs.front().step + 1;			
+				visited[temp.r][temp.c] = true;
+				bfs.push(temp);
+			}
+		}
+		if(bfs.front().r - 1 >= 1 && bfs.front().c - 2 >= 1){
+			if(!visited[bfs.front().r - 1][bfs.front().c - 2]){
+				temp.r = bfs.front().r - 1;
+				temp.c = bfs.front().c - 2;	
+				temp.step = bfs.front().step + 1;			
+				visited[temp.r][temp.c] = true;
+				bfs.push(temp);
+			}
+		}		
+		if(bfs.front().r - 2 >= 1 && bfs.front().c + 1 <= m){
+			if(!visited[bfs.front().r - 2][bfs.front().c + 1]){
+				temp.r = bfs.front().r - 2;
+				temp.c = bfs.front().c + 1;	
+				temp.step = bfs.front().step + 1;			
+				visited[temp.r][temp.c] = true;
+				bfs.push(temp);
+			}
+		}
+		if(bfs.front().r - 1 >= 1 && bfs.front().c + 2 <= m){
+			if(!visited[bfs.front().r - 1][bfs.front().c + 2]){
+				temp.r = bfs.front().r - 1;
+				temp.c = bfs.front().c + 2;	
+				temp.step = bfs.front().step + 1;			
+				visited[temp.r][temp.c] = true;
+				bfs.push(temp);
+			}
+		}		
+		if(bfs.front().r + 1 <= n && bfs.front().c + 2 <= m){
+			if(!visited[bfs.front().r + 1][bfs.front().c + 2]){
+				temp.r = bfs.front().r + 1;
+				temp.c = bfs.front().c + 2;	
+				temp.step = bfs.front().step + 1;			
+				visited[temp.r][temp.c] = true;
+				bfs.push(temp);
+			}
+		}	
+		if(bfs.front().r + 2 <= n && bfs.front().c + 1 <= m){
+			if(!visited[bfs.front().r + 2][bfs.front().c + 1]){
+				temp.r = bfs.front().r + 2;
+				temp.c = bfs.front().c + 1;	
+				temp.step = bfs.front().step + 1;			
+				visited[temp.r][temp.c] = true;
+				bfs.push(temp);
+			}
+		}		
+		if(bfs.front().r + 1 <= n && bfs.front().c - 2 >= 1){
+			if(!visited[bfs.front().r + 1][bfs.front().c - 1]){
+				temp.r = bfs.front().r + 1;
+				temp.c = bfs.front().c - 2;	
+				temp.step = bfs.front().step + 1;			
+				visited[temp.r][temp.c] = true;
+				bfs.push(temp);
+			}
+		}	
+		if(bfs.front().r + 2 <= n && bfs.front().c - 1 >= 1){
+			if(!visited[bfs.front().r + 2][bfs.front().c - 1]){
+				temp.r = bfs.front().r + 2;
+				temp.c = bfs.front().c - 1;	
+				temp.step = bfs.front().step + 1;			
+				visited[temp.r][temp.c] = true;
+				bfs.push(temp);
+			}
+		}
+		bfs.pop();					
+	}
+	if(!check)
+		std::cout << "-1";
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+//Sức mạnh tập thể----------------------------------------------------------------------------------------------------
+/*
+std::vector <std::vector <long long> > power;
+long long M, res = 0;
+long long value = 0;
+
+void backtracking(int pos){
+	for(int i = 0; i < power[pos].size(); i++){
+		value += power[pos][i] * power[pos][i];
+		if(pos == power.size() - 1){
+			if(value % M > res)
+				res = value % M;
+		}
+		else backtracking(pos + 1);
+		value -= power[pos][i] * power[pos][i];
+	}
+}
+
+
+
+
+
+
+main(){
+	long long i, j, so;
+	std::cin >> i >> M;
+	while(i != 0){
+		std::vector<long long> temp;
+		std::cin >> j;
+		while(j != 0){
+			std::cin >> so;
+			temp.push_back(so);
+			j--;
+		}
+		res += temp[0] * temp[0];
+		power.push_back(temp);
+		i--;
+	}
+	res = res % M;
+	backtracking(0);
+	std::cout << res;
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Lại là Robot quét vôi----------------------------------------------------------------------------------------------------
+/*
+int main(){
+	int n, m;
+	int da_quet = 0;
+	int quet = 0;
+	std::cin >> n >> m;
+	int so1, so2, dp[m + 1] = {0};
+	for(int i = 0; i < n; i++){
+		std::cin >> so1 >> so2;
+		if(dp[so1] < so2){
+			dp[so1] = so2;
+		}
+	}
+	for(int i = 0; i <= m; i++){
+		if(dp[i] > quet)
+		{
+			quet = dp[i];
+		}
+		if(i < quet){
+			da_quet++;
+		}
+	}
+	std::cout << m - da_quet;
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Vươn tới Mặt Trăng----------------------------------------------------------------------------------------------------
+/*
+long long n, a, b;
+long long c = 0;
+const long long MOD = 1e9 + 7;
+long long f[100000] = {0};
+
+
+
+long long fact(long long n){
+	if(f[n] != 0)return f[n];
+	return f[n] = (fact(n - 1) % MOD * n % MOD)%MOD;
+}
+
+long long turbo_exp(long long a, long long b, long long m){
+	long long res = 1;
+	while(b != 0){
+		if(b & 1)res = (res * a) % m;
+		a = (a * a) % MOD;
+		b = b / 2;
+	}
+	return res;
+}
+
+
+long long combination(long long n, long long k)
+{
+	return fact(n) % MOD * turbo_exp((fact(n - k) % MOD * fact(k) % MOD) % MOD, MOD - 2, MOD) % MOD;
+}
+
+
+
+
+main(){
+	f[0] = 1; f[1] = 1;
+	int size = 0;
+	std::cin >> n >> a >> b;
+	if(n == 0){
+		std::cout << "0";
+		return 0;
+	}
+	long long s = 0;
+	while(!(s > n)){
+		if((n - s) % b == 0){
+			c = (c % MOD + combination(s / a + (n - s) / b, s / a) % MOD) % MOD;
+		}
+		s+=a;
+	}
+	std::cout << c;
+}
+*/
 
 
 
