@@ -3179,6 +3179,178 @@ main(){
 
 
 
+//Sàng Eratosthenes----------------------------------------------------------------------------------------------------
+/*
+void cacsonguyento(int, int);
+
+int is_prime[2000002];
+int main(){
+	is_prime[0] = -1;
+	is_prime[1] = -1;
+	is_prime[2] = 1;
+	int n, i, a, b;
+	scanf("%d", &n);
+	while(n != 0){
+		scanf("%d %d", &a, &b);
+		cacsonguyento(a, b);
+		n--;
+	}
+}
+
+
+
+void cacsonguyento(int a, int b){
+	int res = 0; 
+	int i, j, demchiahet, dieukien = 1;
+		for(i = a; i <= b; i++){
+		if(is_prime[i] != 0){
+			if(is_prime[i] == 1)res++;
+			continue;
+		}
+		demchiahet = 0; 
+		for(j = 2; j <= sqrt(i); j++){
+			if(i % j == 0){
+				is_prime[i] = -1;
+				demchiahet++;
+				break;
+			}
+		}
+		if(demchiahet == 0){
+			is_prime[i] = 1;
+			res++;
+		}
+		
+	}
+	printf("%d\n", res);
+}
+*/
+
+
+
+
+
+
+
+//Lại là Dãy con liên tục khác biệt----------------------------------------------------------------------------------------------------
+/*
+int main()
+{
+    std::queue<int> q;
+    std::map<int, int> visited;
+    int i, j, n, max = 0, size = 0;
+    std::cin >> n;
+    int arr[n];
+    for (i = 0; i < n; i++)
+    {
+        std::cin >> arr[i];
+    }
+    for (i = 0; i < n; i++)
+    {
+        if (visited[arr[i]])
+        {
+            if (q.size() > max)
+                max = q.size();
+            while (arr[i] != q.front())
+            {
+                visited[q.front()] = 0;
+                q.pop();
+            }
+            q.pop();
+        }
+        visited[arr[i]] = 1;
+        q.push(arr[i]);
+    }
+    if (q.size() > max)
+        max = q.size();
+    std::cout << max;
+}
+*/
+
+
+
+
+
+
+
+
+
+
+//Giải ô số Game Sudoku----------------------------------------------------------------------------------------------------
+/*
+typedef struct
+{
+    int r;
+    int c;
+} point;
+int matrix[9][9];
+std::vector<point> p;
+bool row_visited[9][10] = {false};
+bool column_visited[9][10] = {false};
+bool square_visited[9][10] = {false};
+void print()
+{
+    for (int i = 0; i < 9; i++)
+    {
+        for (int j = 0; j < 9; j++)
+        {
+            std::cout << matrix[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+void bt(int pos)
+{
+    for (int so = 1; so <= 9; so++)
+    {
+        if ((!row_visited[p[pos].r][so]) && (!column_visited[p[pos].c][so]) && (!square_visited[(p[pos].r - p[pos].r % 3) + (p[pos].c - p[pos].c % 3) / 3][so]))
+        {
+            row_visited[p[pos].r][so] = true;
+            column_visited[p[pos].c][so] = true;
+            square_visited[(p[pos].r - p[pos].r % 3) + (p[pos].c - p[pos].c % 3) / 3][so] = true;
+            matrix[p[pos].r][p[pos].c] = so;
+            if (pos == p.size() - 1)
+            {
+                print();
+            }
+            else
+                bt(pos + 1);
+            row_visited[p[pos].r][so] = false;
+            column_visited[p[pos].c][so] = false;
+            square_visited[(p[pos].r - p[pos].r % 3) + (p[pos].c - p[pos].c % 3) / 3][so] = false;
+        }
+    }
+}
+int main()
+{
+
+    for (int i = 0; i < 9; i++)
+    {
+        for (int j = 0; j < 9; j++)
+        {
+            std::cin >> matrix[i][j];
+            if (matrix[i][j] == 0)
+            {
+                point temp;
+                temp.r = i;
+                temp.c = j;
+                p.push_back(temp);
+            }
+            else
+            {
+                row_visited[i][matrix[i][j]] = true;
+                column_visited[j][matrix[i][j]] = true;
+                square_visited[(i - i % 3) + (j - j % 3) / 3][matrix[i][j]] = true;
+            }
+        }
+    }
+    bt(0);
+}
+*/
+
+
+
+
 
 
 
