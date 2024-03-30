@@ -1,1 +1,1 @@
-{"name":"Local: training","url":"c:\\Users\\tuanh\\Desktop\\training\\training.cpp","tests":[],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\tuanh\\Desktop\\training\\training.cpp","group":"local","local":true}
+{"name":"Local: training","url":"c:\\Users\\tuanh\\Desktop\\training\\training.cpp","tests":[{"id":1711530423950,"input":"TANAL\nHANHA","output":"HANAA\nHANAL\nHANHA\nTANAA\nTANAL\nTANHA"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\tuanh\\Desktop\\training\\training.cpp","group":"local","local":true}
