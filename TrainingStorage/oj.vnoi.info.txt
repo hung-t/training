@@ -1,0 +1,114 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+
+
+//1. A cộng B----------------------------------------------------------------------------------------------------
+/*
+int main()
+{
+    long long a, b;
+    cin >> a >> b;
+    cout << a + b;
+}
+*/
+
+
+
+
+
+
+
+//2. Duyên Hải 2021 - Khối 10 - Bài 1 - Bài dễ----------------------------------------------------------------------------------------------------
+/*
+int main()
+{
+    int n;
+    cin >> n;
+    vector<int> tap;
+    tap.push_back(2);
+    for (int i = 3; i <= n; i++)
+    {
+        bool is_prime = true;
+        for (int so = 2; so <= sqrt(i); so++)
+        {
+            if (i % so == 0)
+            {
+                is_prime = false;
+                break;
+            }
+        }
+        if (is_prime)
+        {
+            tap.push_back(i);
+        }
+    }
+    int s[n + 1] = {0};
+    s[0] = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        int so;
+        cin >> so;
+        s[i] = s[i - 1] + so;
+    }
+    int max = s[2] - s[1], min = s[1];
+    for (int i = 0; i < tap.size(); i++)
+    {
+        min = (min > s[tap[i] - 1]) ? (s[tap[i] - 1]) : min;
+        max = (max > s[tap[i]] - min) ? max : (s[tap[i]] - min);
+    }
+    cout << max;
+}
+*/
+
+
+
+
+
+//3. HSG THPT Hải Phòng 2021 - Bài 1----------------------------------------------------------------------------------------------------
+/*
+int main()
+{
+    string str;
+    getline(cin, str);
+    for (int i = 0; i < str.size(); i++)
+    {
+        if ((str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= 'a' && str[i] <= 'z'))
+            cout << str[i];
+    }
+}
+*/
+
+
+
+
+//4. HSG THPT Thanh Hóa 2022 - Robot----------------------------------------------------------------------------------------------------
+/*
+int main(){
+    FILE* fp_w;
+    FILE* fp_r;
+    fp_r = fopen("ROBOT.INP", "r");
+    fp_w = fopen("ROBOT.OUT", "w");
+    long long x1, y1, x2, y2;
+    fscanf(fp_r, "%lld %lld %lld %lld", &x1, &y1, &x2, &y2);
+    fprintf(fp_w, "%lld", (abs(x1 - x2) > abs(y1 - y2) ? abs(x1 - x2) : abs(y1 - y2)));
+}
+*/
+
+
+
+
+
+//5. HSG THPT Hải Phòng 2022 - Bài 1----------------------------------------------------------------------------------------------------
+/*
+int main()
+{
+    string str;
+    cin >> str;
+    int count = 0;
+    for (int i = 0; i < str.size() - 5; i++)
+        if (str.substr(i, 5) == "virus")
+            count++;
+    cout << count;
+}
+*/

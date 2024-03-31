@@ -575,3 +575,82 @@ int main()
 
 
 
+
+
+
+//26. Hình chữ nhật--------------------------------------------------------------
+/*
+int main()
+{
+    long long a, b, c, s;
+    cin >> a >> b;
+    c = (a + b) * 2;
+    s = a * b;
+    cout << c << "\n"
+         << s;
+}
+*/
+
+
+
+
+
+//27. Chênh lệch nguyên tố (Câu 3 đề thi HSG THPT bảng B Nghệ An 2021)--------------------------------------------------------------
+/*
+bool is_prime[1000001] = {false};
+int main()
+{
+    is_prime[2] = true;
+    for (int i = 3; i < 1000000; i++)
+    {
+        is_prime[i] = true;
+        for (int so = 2; so <= sqrt(i); so++)
+        {
+            if (i % so == 0)
+            {
+                is_prime[i] = false;
+                break;
+            }
+        }
+    }
+    int n = 0;
+    int c = 0;
+    cin >> n;
+    int arr[n];
+    for (int i = 0; i < n; i++)
+    {
+        cin >> arr[i];
+    }
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            if (is_prime[(arr[i] - arr[j] > 0 ? (arr[i] - arr[j]) : (arr[j] - arr[i]))])
+            {
+                c++;
+            }
+        }
+    }
+    cout << c;
+}
+*/
+
+
+
+
+//28. Khoảng cách tới 0--------------------------------------------------------------
+/*
+int main()
+{
+    long long a, b;
+    cin >> a >> b;
+    a = ((a > 0) ? a : -a);
+    b = ((b > 0) ? b : -b);
+    cout << ((a > b) ? b : a);
+}
+*/
+
+
+
+
+
